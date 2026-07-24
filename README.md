@@ -6,11 +6,9 @@ The VPN **terminates on OPNsense** (your Sophos XG hardware). The container only
 
 ## One-liner (on Proxmox host as root)
 
-Replace `OWNER/REPO` after you clone/push, or use the URL from the repo homepage:
-
 ```bash
-export REPO_URL="https://github.com/OWNER/REPO.git"
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/OWNER/REPO/main/proxmox/create-helper-ct.sh)"
+export REPO_URL="https://github.com/SimpleWooden/ProxmoxVPNDeployment.git"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/SimpleWooden/ProxmoxVPNDeployment/main/proxmox/create-helper-ct.sh)"
 ```
 
 Optional overrides:
@@ -21,8 +19,8 @@ export STORAGE=local-lvm
 export BRIDGE=vmbr0
 export MEMORY_MB=128
 export DISK_GB=1
-export REPO_URL="https://github.com/OWNER/REPO.git"
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/OWNER/REPO/main/proxmox/create-helper-ct.sh)"
+export REPO_URL="https://github.com/SimpleWooden/ProxmoxVPNDeployment.git"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/SimpleWooden/ProxmoxVPNDeployment/main/proxmox/create-helper-ct.sh)"
 ```
 
 ## After the CT is created

@@ -9,8 +9,8 @@ Windows PowerShell scripts under `scripts/` remain available if you configure fr
 On the Proxmox host as root (set your GitHub URL):
 
 ```bash
-export REPO_URL="https://github.com/OWNER/REPO.git"
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/OWNER/REPO/main/proxmox/create-helper-ct.sh)"
+export REPO_URL="https://github.com/SimpleWooden/ProxmoxVPNDeployment.git"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/SimpleWooden/ProxmoxVPNDeployment/main/proxmox/create-helper-ct.sh)"
 ```
 
 Then `pct enter <CTID>`, edit `config.env`, run `opn-wg-configure`.
