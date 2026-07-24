@@ -6,7 +6,7 @@ The VPN **terminates on OPNsense** (your Sophos XG hardware). The container only
 
 ## One-liner (on Proxmox host as root)
 
-Creates an interactive wizard. Defaults: hostname **BTAL01**, IP **192.168.0.122/22**, gateway/DNS **192.168.0.1**.
+Creates an interactive wizard. Defaults: hostname **BTAL01**, IP **192.168.0.122/22**, gateway/DNS **192.168.0.1**, storage **app-storage**.
 
 **Do not** use `bash -c "$(curl ...)"` — that breaks the script. Use process substitution:
 

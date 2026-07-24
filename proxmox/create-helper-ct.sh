@@ -73,10 +73,13 @@ banner
 NEXT_ID=200
 while pct status "$NEXT_ID" &>/dev/null; do NEXT_ID=$((NEXT_ID + 1)); done
 
-# Prefer non-dir storage for rootfs
-DEFAULT_STORAGE="$(pvesm status -content rootdir 2>/dev/null | awk 'NR>1 && $2!="dir" {print $1; exit}')"
-[[ -n "$DEFAULT_STORAGE" ]] || DEFAULT_STORAGE="$(pvesm status -content rootdir 2>/dev/null | awk 'NR>1 {print $1; exit}')"
-[[ -n "$DEFAULT_STORAGE" ]] || DEFAULT_STORAGE="local-lvm"
+# Prefer app-storage when present; otherwise first rootdir-capable store
+DEFAULT_STORAGE="app-storage"
+if ! pvesm status -content rootdir 2>/dev/null | awk 'NR>1 {print $1}' | grep -qx "app-storage"; then
+  DEFAULT_STORAGE="$(pvesm status -content rootdir 2>/dev/null | awk 'NR>1 && $2!="dir" {print $1; exit}')"
+  [[ -n "$DEFAULT_STORAGE" ]] || DEFAULT_STORAGE="$(pvesm status -content rootdir 2>/dev/null | awk 'NR>1 {print $1; exit}')"
+  [[ -n "$DEFAULT_STORAGE" ]] || DEFAULT_STORAGE="app-storage"
+fi
 
 # Bridges hint
 BRIDGE_HINT="$(ls /sys/class/net 2>/dev/null | grep -E '^vmbr' | head -n1 || true)"
