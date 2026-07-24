@@ -6,8 +6,9 @@ The VPN **terminates on OPNsense** (your Sophos XG hardware). The container only
 
 ## One-liner (on Proxmox host as root)
 
+Creates container **BTAL01** at static **192.168.0.122/22** (gateway/DNS `192.168.0.1`) by default.
+
 ```bash
-export REPO_URL="https://github.com/SimpleWooden/ProxmoxVPNDeployment.git"
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/SimpleWooden/ProxmoxVPNDeployment/main/proxmox/create-helper-ct.sh)"
 ```
 
@@ -19,7 +20,8 @@ export STORAGE=local-lvm
 export BRIDGE=vmbr0
 export MEMORY_MB=128
 export DISK_GB=1
-export REPO_URL="https://github.com/SimpleWooden/ProxmoxVPNDeployment.git"
+export CT_HOSTNAME=BTAL01
+export IPCONFIG="ip=192.168.0.122/22,gw=192.168.0.1"
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/SimpleWooden/ProxmoxVPNDeployment/main/proxmox/create-helper-ct.sh)"
 ```
 

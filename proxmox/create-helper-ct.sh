@@ -14,17 +14,19 @@ set -euo pipefail
 
 # --------------- defaults (override via env) ---------------
 CTID="${CTID:-}"
-CT_HOSTNAME="${CT_HOSTNAME:-opn-wg-helper}"
+CT_HOSTNAME="${CT_HOSTNAME:-BTAL01}"
 STORAGE="${STORAGE:-}"
 BRIDGE="${BRIDGE:-vmbr0}"
-IPCONFIG="${IPCONFIG:-ip=dhcp}"
+# LAN is 192.168.0.0/22; OPNsense gateway 192.168.0.1
+IPCONFIG="${IPCONFIG:-ip=192.168.0.122/22,gw=192.168.0.1}"
+NAMESERVER="${NAMESERVER:-192.168.0.1}"
 CORES="${CORES:-1}"
 MEMORY_MB="${MEMORY_MB:-128}"
 SWAP_MB="${SWAP_MB:-128}"
 DISK_GB="${DISK_GB:-1}"
 TEMPLATE_STORAGE="${TEMPLATE_STORAGE:-local}"
 ALPINE_VERSION="${ALPINE_VERSION:-3.21}"
-REPO_URL="${REPO_URL:-}"
+REPO_URL="${REPO_URL:-https://github.com/SimpleWooden/ProxmoxVPNDeployment.git}"
 REPO_REF="${REPO_REF:-main}"
 START_CT="${START_CT:-1}"
 UNPRIVILEGED="${UNPRIVILEGED:-1}"
@@ -82,6 +84,7 @@ pct create "$CTID" "$TEMPLATE_PATH" \
   --swap "$SWAP_MB" \
   --rootfs "${STORAGE}:${DISK_GB}" \
   --net0 "name=eth0,bridge=${BRIDGE},${IPCONFIG}" \
+  --nameserver "$NAMESERVER" \
   --unprivileged "$UNPRIVILEGED" \
   --features nesting=0 \
   --onboot 0 \
