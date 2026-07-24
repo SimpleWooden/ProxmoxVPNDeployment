@@ -1,0 +1,20 @@
+# Secrets and generated material
+.venv/
+config.env
+config.ps1
+peers.json
+state/
+clients/*.conf
+clients/*.png
+clients/*.txt
+clients/ROLLOUT.txt
+__pycache__/
+*.pyc
+.DS_Store
+opn-home.html
+*.log
+
+# Editor / OS
+.idea/
+.vscode/
+Thumbs.db

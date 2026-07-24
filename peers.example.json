@@ -1,0 +1,26 @@
+[
+  {
+    "name": "you-phone",
+    "tunnelAddress": "10.10.10.2/32",
+    "keepalive": 25,
+    "platform": "mobile"
+  },
+  {
+    "name": "you-laptop",
+    "tunnelAddress": "10.10.10.3/32",
+    "keepalive": 25,
+    "platform": "pc"
+  },
+  {
+    "name": "partner-phone",
+    "tunnelAddress": "10.10.10.4/32",
+    "keepalive": 25,
+    "platform": "mobile"
+  },
+  {
+    "name": "friend-a-phone",
+    "tunnelAddress": "10.10.10.5/32",
+    "keepalive": 25,
+    "platform": "mobile"
+  }
+]
