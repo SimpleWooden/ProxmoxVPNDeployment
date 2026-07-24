@@ -64,8 +64,9 @@ need pct
 need pvesm
 need pveam
 need wget
-need git
 need awk
+# git is optional; we prefer GitHub tarball download (curl/wget)
+command -v curl >/dev/null 2>&1 || need wget
 
 banner
 
@@ -185,10 +186,24 @@ TMP_CLONE="$(mktemp -d)"
 cleanup() { rm -rf "$TMP_CLONE"; }
 trap cleanup EXIT
 
-info "Cloning helper repo into CT..."
-git clone --depth 1 --branch "$REPO_REF" "$REPO_URL" "$TMP_CLONE/repo"
+info "Fetching helper repo into CT..."
+# Prefer tarball (no git required on Proxmox host). Fall back to git if present.
+REPO_HTTP="${REPO_URL%.git}"
+ARCHIVE_URL="${REPO_HTTP}/archive/refs/heads/${REPO_REF}.tar.gz"
+mkdir -p "$TMP_CLONE/extract"
+if command -v curl >/dev/null 2>&1; then
+  curl -fsSL "$ARCHIVE_URL" -o "$TMP_CLONE/repo.tgz"
+elif command -v wget >/dev/null 2>&1; then
+  wget -qO "$TMP_CLONE/repo.tgz" "$ARCHIVE_URL"
+else
+  die "Need curl or wget to download $ARCHIVE_URL"
+fi
+tar -xzf "$TMP_CLONE/repo.tgz" -C "$TMP_CLONE/extract"
+# GitHub archives unpack to <repo>-<branch>/
+SRC_DIR="$(find "$TMP_CLONE/extract" -mindepth 1 -maxdepth 1 -type d | head -n1)"
+[[ -n "$SRC_DIR" && -d "$SRC_DIR" ]] || die "Failed to unpack helper archive from $ARCHIVE_URL"
 pct exec "$CTID" -- mkdir -p "$HELPER_DIR"
-tar -C "$TMP_CLONE/repo" -cf - . | pct exec "$CTID" -- tar -C "$HELPER_DIR" -xf -
+tar -C "$SRC_DIR" -cf - . | pct exec "$CTID" -- tar -C "$HELPER_DIR" -xf -
 pct exec "$CTID" -- sh -c "chmod +x ${HELPER_DIR}/helper/*.sh ${HELPER_DIR}/proxmox/*.sh 2>/dev/null || true"
 pct exec "$CTID" -- sh -c "
   cd ${HELPER_DIR}
