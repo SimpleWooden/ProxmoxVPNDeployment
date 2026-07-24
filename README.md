@@ -8,17 +8,23 @@ The VPN **terminates on OPNsense** (your Sophos XG hardware). The container only
 
 Creates an interactive wizard. Defaults: hostname **BTAL01**, IP **192.168.0.122/22**, gateway/DNS **192.168.0.1**, storage **app-storage**.
 
-**Do not** use `bash -c "$(curl ...)"` — that breaks the script. Use process substitution:
+**Do not** use `bash -c "$(curl ...)"` — that breaks the script. Use:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/SimpleWooden/ProxmoxVPNDeployment/main/proxmox/create-helper-ct.sh)
+bash <(curl -fsSL https://cdn.jsdelivr.net/gh/SimpleWooden/ProxmoxVPNDeployment@main/proxmox/install.sh)
+```
+
+Or (GitHub raw, new path to avoid stale CDN cache):
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/SimpleWooden/ProxmoxVPNDeployment/main/proxmox/install.sh)
 ```
 
 Or download then run:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/SimpleWooden/ProxmoxVPNDeployment/main/proxmox/create-helper-ct.sh -o /tmp/create-helper-ct.sh
-bash /tmp/create-helper-ct.sh
+curl -fsSL https://cdn.jsdelivr.net/gh/SimpleWooden/ProxmoxVPNDeployment@main/proxmox/install.sh -o /tmp/install.sh
+bash /tmp/install.sh
 ```
 
 ## After the CT is created
