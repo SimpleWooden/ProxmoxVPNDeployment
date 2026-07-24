@@ -6,23 +6,19 @@ The VPN **terminates on OPNsense** (your Sophos XG hardware). The container only
 
 ## One-liner (on Proxmox host as root)
 
-Creates container **BTAL01** at static **192.168.0.122/22** (gateway/DNS `192.168.0.1`) by default.
+Creates an interactive wizard. Defaults: hostname **BTAL01**, IP **192.168.0.122/22**, gateway/DNS **192.168.0.1**.
+
+**Do not** use `bash -c "$(curl ...)"` — that breaks the script. Use process substitution:
 
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/SimpleWooden/ProxmoxVPNDeployment/main/proxmox/create-helper-ct.sh)"
+bash <(curl -fsSL https://raw.githubusercontent.com/SimpleWooden/ProxmoxVPNDeployment/main/proxmox/create-helper-ct.sh)
 ```
 
-Optional overrides:
+Or download then run:
 
 ```bash
-export CTID=210
-export STORAGE=local-lvm
-export BRIDGE=vmbr0
-export MEMORY_MB=128
-export DISK_GB=1
-export CT_HOSTNAME=BTAL01
-export IPCONFIG="ip=192.168.0.122/22,gw=192.168.0.1"
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/SimpleWooden/ProxmoxVPNDeployment/main/proxmox/create-helper-ct.sh)"
+curl -fsSL https://raw.githubusercontent.com/SimpleWooden/ProxmoxVPNDeployment/main/proxmox/create-helper-ct.sh -o /tmp/create-helper-ct.sh
+bash /tmp/create-helper-ct.sh
 ```
 
 ## After the CT is created
